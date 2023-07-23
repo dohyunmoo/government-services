@@ -22,18 +22,13 @@ database = {
     ]
 }
 
-@app.route('/confirm_user_vehicle', methods=['POST'])
+@app.route('/confirm_user_vehicle', methods=['GET'])
 def confirm_user_vehicle():
     data = request.json
-    user_email = data.get('user_email')
     license_plate = data.get('license_plate')
 
-    if not user_email or not license_plate:
+    if not license_plate:
         return jsonify({"message": "Bad Request"}), 400
-
-    user = next((u for u in database['users'] if u['email'] == user_email), None)
-    if not user:
-        return jsonify({"message": "User not found"}), 404
 
     vehicle = next((v for v in database['vehicles'] if v['license_plate'] == license_plate), None)
     if not vehicle:
