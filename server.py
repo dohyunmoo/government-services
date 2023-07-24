@@ -75,17 +75,19 @@ def create_user_ticket():
         drivers_license = user['drivers_license']
         cost = 100.00
 
-        issue_date = datetime.now()
-        due_date = datetime.now() + datetime.timedelta(days=21)
+        issue_date = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+        due_date = (datetime.now() + datetime.timedelta(days=21)).strftime("%Y-%m-%dT%H:%M:%SZ")
 
         json_data = {
-            "drivers_license": drivers_license,
-            "license_plate": license_plate,
-            "province": "Ontario",
-            "cost": cost,
-            "type": type,
-            "issue_date": issue_date,
-            "due_date": due_date
+            "ticket": {
+                "drivers_license": drivers_license,
+                "license_plate": license_plate,
+                "province": "Ontario",
+                "cost": cost,
+                "type": type,
+                "issue_date": issue_date,
+                "due_date": due_date
+            }
         }
         
         res = make_response(jsonify(json_data), 200)
