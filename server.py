@@ -81,6 +81,7 @@ def create_user_ticket():
         json_data = {
             "drivers_license": drivers_license,
             "license_plate": license_plate,
+            "province": "Ontario",
             "cost": cost,
             "type": type,
             "issue_date": issue_date,
