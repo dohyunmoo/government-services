@@ -69,6 +69,14 @@ database = {
             "model": "Sd",
             "year": 2015,
             "province": "ontario"
+        },
+        {
+            "id": 7,
+            "licence_plate": "A1B2C3",
+            "make": "Toyota",
+            "model": "Corolla",
+            "year": 2015,
+            "province": "ontario"
         }
     ]
 }
