@@ -71,7 +71,7 @@ database = {
             "province": "ontario"
         },
         {
-            "id": 7,
+            "id": 8,
             "licence_plate": "A1B2C3",
             "make": "Toyota",
             "model": "Corolla",
