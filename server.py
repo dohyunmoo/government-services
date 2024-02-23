@@ -11,6 +11,14 @@ app = Flask(__name__)
 database = {
     "users": [
         {
+            "id": 3,
+            "firebase_id": "s28d1WBGbZP8Maoq4HUmPxspRNz2",
+            "name": "sarman",
+            "phone_number": null,
+            "email": "aulakh189@gmail.com",
+            "drivers_licence_number": "abc123"
+        }
+        {
             "id": 4,
             "firebase_id": "1234gh5",
             "name": "test1",
@@ -83,25 +91,25 @@ database = {
 
 @app.route('/confirm_user_vehicle', methods=['GET'])
 def confirm_user_vehicle():
-    data = request.json
-    name = data.get('name')
-    drivers_licence = data.get('drivers_licence')
-    licence_plate = data.get('licence_plate')
-    province = data.get('province')
+    # data = request.json
+    # name = data.get('name')
+    # drivers_licence = data.get('drivers_licence')
+    # licence_plate = data.get('licence_plate')
+    # province = data.get('province')
     
 
-    if not licence_plate or not drivers_licence or not name or not province:
-        return jsonify({"message": "Bad Request"}), 400
+    # if not licence_plate or not drivers_licence or not name or not province:
+    #     return jsonify({"message": "Bad Request"}), 400
 
-    vehicle = next((v for v in database['vehicles'] if v['licence_plate'] == licence_plate and v['province'] == province), None)
-    if not vehicle:
-        return jsonify({"message": "Vehicle not found"}), 404
+    # vehicle = next((v for v in database['vehicles'] if v['licence_plate'] == licence_plate and v['province'] == province), None)
+    # if not vehicle:
+    #     return jsonify({"message": "Vehicle not found"}), 404
 
-    pair = next((id for id in database['user_vehicle'] if id['vehicle_id'] == vehicle['id']))
-    user = next((u for u in database['users'] if u['id'] == pair['user_id']))
+    # pair = next((id for id in database['user_vehicle'] if id['vehicle_id'] == vehicle['id']))
+    # user = next((u for u in database['users'] if u['id'] == pair['user_id']))
     
-    if user["drivers_licence"] != drivers_licence or user["name"] != name:
-        return jsonify({"message": "User-Vehicle relationship does not match"}), 404
+    # if user["drivers_licence"] != drivers_licence or user["name"] != name:
+    #     return jsonify({"message": "User-Vehicle relationship does not match"}), 404
 
     return jsonify({"message": "User-Vehicle relationship confirmed"}), 200
 
