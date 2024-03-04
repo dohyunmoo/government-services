@@ -14,10 +14,10 @@ database = {
             "id": 3,
             "firebase_id": "s28d1WBGbZP8Maoq4HUmPxspRNz2",
             "name": "sarman",
-            "phone_number": null,
+            "phone_number": "123-456-7890",
             "email": "aulakh189@gmail.com",
             "drivers_licence_number": "abc123"
-        }
+        },
         {
             "id": 4,
             "firebase_id": "1234gh5",
@@ -63,6 +63,14 @@ database = {
     ],
     "vehicles": [
         {
+            "id": 1,
+            "licence_plate": "SAT12",
+            "make": "Honda",
+            "model": "Civic",
+            "year": 2013,
+            "province": "ontario",
+        },
+        {
             "id": 6,
             "licence_plate": "Asf",
             "make": "Asf",
@@ -86,6 +94,39 @@ database = {
             "year": 2015,
             "province": "ontario"
         }
+    ]
+}
+
+demo_database = {
+    "users": [
+        {
+            "id": 3,
+            "firebase_id": "s28d1WBGbZP8Maoq4HUmPxspRNz2",
+            "name": "sarman",
+            "phone_number": "123-456-7890",
+            "email": "aulakh189@gmail.com",
+            "drivers_licence_number": "abc123"
+        },
+    ],
+    "user_vehicle": [
+        {
+            "user_id": 5,
+            "vehicle_id": 6
+        },
+        {
+            "user_id": 5,
+            "vehicle_id": 7
+        }
+    ],
+    "vehicles": [
+        {
+            "id": 1,
+            "licence_plate": "SAT12",
+            "make": "Honda",
+            "model": "Civic",
+            "year": 2013,
+            "province": "ontario",
+        },
     ]
 }
 
@@ -121,13 +162,15 @@ def create_user_ticket():
     province = data.get('province')
     cost = data.get('cost')
     type = data.get('type')
+    ticket_number = data.get('ticket_number')
 
     if not licence_plate or not type:
         return jsonify({"message": "Bad Request"}), 400
-
+    
     vehicle = next((v for v in database['vehicles'] if v['licence_plate'] == licence_plate), None)
     if not vehicle:
         return jsonify({"message": "Vehicle not found"}), 404
+    
     else:
         issue_date = datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
         due_date = (datetime.now() + timedelta(days=21)).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -138,20 +181,19 @@ def create_user_ticket():
                 "province": province,
                 "cost": cost,
                 "penalty_type": type,
+                "ticket_number": ticket_number,
                 "issue_date": issue_date,
                 "due_date": due_date
             }
         }
-        
         res = make_response(jsonify(json_data), 200)
         print("res:",json_data)
         
         API_ENDPOINT = "https://rails-ticket-server-d195e679f8ce.herokuapp.com/api/v1/tickets"
         # API_KEY = ""
         r = requests.post(url=API_ENDPOINT, headers={ "Content-Type" : "application/json" }, json=json_data)
-        print(r)
+        print("thisone",r)
         return res
-
 
 if __name__ == '__main__':
     app.run(port=5000)
